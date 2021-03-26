@@ -1,0 +1,192 @@
+SQL> 
+SQL> --lista uzytkownikow imie, nazwisko, nazwa kategorii, nr upodobania kategorii
+SQL> SELECT uzytkownicy.imie, uzytkownicy.nazwisko, kategorie.nazwa,kat_interesujace_uzyt.nr_upodobania
+  2  FROM UZYTKOWNICY
+  3  INNER JOIN KAT_INTERESUJACE_UZYT
+  4  ON UZYTKOWNICY.NUMER_UZYTKOWNIKA = KAT_INTERESUJACE_UZYT.NUMER_UZYTKOWNIKA
+  5  INNER JOIN kategorie
+  6  ON KAT_INTERESUJACE_UZYT.NUMER_UZYTKOWNIKA = kategorie.id_kategorii;
+
+IMIE                 NAZWISKO             NAZWA                NR_UPODOBANIA
+-------------------- -------------------- -------------------- -------------
+Adelajda             Kami?ska             MOTORYZACJA                      8
+Genowefa             Olszewska            SPORT                            9
+Marceli              Olszewsi             BOKS                             6
+
+SQL> 
+SQL> --lista uzytkownikow z nazwami i wartosciami parametrow
+SQL> SELECT uzytkownicy.imie, uzytkownicy.nazwisko,PARAMETRY_WYGLADU_STR.NAZWA ,parametry_uzyt.wartosc, parametry_wygladu_str.opis
+  2  FROM UZYTKOWNICY
+  3  INNER JOIN PARAMETRY_UZYT
+  4  ON UZYTKOWNICY.NUMER_UZYTKOWNIKA = PARAMETRY_UZYT.NUMER_UZYTKOWNIKA
+  5  INNER JOIN  PARAMETRY_WYGLADU_STR
+  6  ON PARAMETRY_UZYT.id_parametru = PARAMETRY_WYGLADU_STR.id_parametru;
+
+IMIE                 NAZWISKO             NAZWA                          WARTOSC
+-------------------- -------------------- ------------------------------ ------------------------------
+OPIS                                                                                                                                                                                                    
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Adelajda             Kami?ska             KOLOR_TLA                      255                            
+Kolor tla strony                                                                                                                                                                                        
+
+Adelajda             Kami?ska             ROZMIAR_CZCIONKI               14                             
+Rozmiar czcionki                                                                                                                                                                                        
+
+Adelajda             Kami?ska             TYP_CZCIONKI                   Arial                          
+Czcionka, Typ                                                                                                                                                                                           
+
+
+SQL> 
+SQL> --lista uzytkownikow /imie,nazwisko/, data, godzina i url odwiedzonych stron  
+SQL> SELECT uzytkownicy.imie, uzytkownicy.nazwisko, (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'DD-MM-YYYY HH24:MI')), DZIENNIKI_AKTYWNOSCI.odwiedzona_strona
+  2  FROM UZYTKOWNICY
+  3  INNER JOIN DZIENNIKI_AKTYWNOSCI
+  4  ON UZYTKOWNICY.NUMER_UZYTKOWNIKA = dzienniki_aktywnosci.numer_uzytkownika;
+
+IMIE                 NAZWISKO             (TO_CHAR(DZIENNI
+-------------------- -------------------- ----------------
+ODWIEDZONA_STRONA                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Adelajda             Kami?ska             04-01-2019 10:00 
+https://studia.elka.pw.edu.pl/file/18Z/BD2.WYK.1/priv/projekt/projekt_bd2.html#3                                                                                                                                                                                                                            
+
+Genowefa             Olszewska            04-01-2019 10:00 
+https://google.com                                                                                                                                                                                                                                                                                          
+
+Genowefa             Olszewska            05-01-2019 12:00 
+https://www.dziwnaczarnastronaztorrentami.net                                                                                                                                                                                                                                                               
+
+Genowefa             Olszewska            06-01-2019 10:00 
+https://www.interia.net                                                                                                                                                                                                                                                                                     
+
+Marceli              Olszewsi             04-01-2019 10:00 
+https://www.tutorialspoint.com/oracle_terminal_online.php                                                                                                                                                                                                                                                   
+
+Marceli              Olszewsi             04-01-2019 12:00 
+https://www.interia.pl                                                                                                                                                                                                                                                                                      
+
+Marceli              Olszewsi             04-01-2019 22:00 
+https://www.dziwnaczarnastronaztorrentami.net                                                                                                                                                                                                                                                               
+
+
+7 rows selected. 
+
+SQL> 
+SQL> --lista stron odwiedzonych przez uzytkownika o nazwisku Olszewsi
+SQL> SELECT uzytkownicy.imie, uzytkownicy.nazwisko, (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'DD-MM-YYYY HH24:MI')), DZIENNIKI_AKTYWNOSCI.odwiedzona_strona
+  2  FROM UZYTKOWNICY
+  3  INNER JOIN DZIENNIKI_AKTYWNOSCI
+  4  ON UZYTKOWNICY.NUMER_UZYTKOWNIKA = dzienniki_aktywnosci.numer_uzytkownika
+  5  WHERE UZYTKOWNICY.nazwisko='Olszewsi';
+
+IMIE                 NAZWISKO             (TO_CHAR(DZIENNI
+-------------------- -------------------- ----------------
+ODWIEDZONA_STRONA                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Marceli              Olszewsi             04-01-2019 10:00 
+https://www.tutorialspoint.com/oracle_terminal_online.php                                                                                                                                                                                                                                                   
+
+Marceli              Olszewsi             04-01-2019 12:00 
+https://www.interia.pl                                                                                                                                                                                                                                                                                      
+
+Marceli              Olszewsi             04-01-2019 22:00 
+https://www.dziwnaczarnastronaztorrentami.net                                                                                                                                                                                                                                                               
+
+
+SQL> 
+SQL> --lista stron uzytkownikow odwidzonych o 10:00 04-01-2019
+SQL> SELECT uzytkownicy.imie, uzytkownicy.nazwisko, (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'DD-MM-YYYY HH24:MI')), DZIENNIKI_AKTYWNOSCI.odwiedzona_strona
+  2  FROM UZYTKOWNICY
+  3  INNER JOIN DZIENNIKI_AKTYWNOSCI
+  4  ON UZYTKOWNICY.NUMER_UZYTKOWNIKA = dzienniki_aktywnosci.numer_uzytkownika
+  5  WHERE (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'DD-MM-YYYY HH24:MI'))='04-01-2019 10:00';
+
+IMIE                 NAZWISKO             (TO_CHAR(DZIENNI
+-------------------- -------------------- ----------------
+ODWIEDZONA_STRONA                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Adelajda             Kami?ska             04-01-2019 10:00 
+https://studia.elka.pw.edu.pl/file/18Z/BD2.WYK.1/priv/projekt/projekt_bd2.html#3                                                                                                                                                                                                                            
+
+Genowefa             Olszewska            04-01-2019 10:00 
+https://google.com                                                                                                                                                                                                                                                                                          
+
+Marceli              Olszewsi             04-01-2019 10:00 
+https://www.tutorialspoint.com/oracle_terminal_online.php                                                                                                                                                                                                                                                   
+
+
+SQL> 
+SQL> --lista stron odwiedzonych o 10:00 przez wszytkich uzytkownikow we wszystkich dniach
+SQL> SELECT uzytkownicy.imie, uzytkownicy.nazwisko, (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'DD-MM-YYYY HH24:MI')), DZIENNIKI_AKTYWNOSCI.odwiedzona_strona
+  2  FROM UZYTKOWNICY
+  3  INNER JOIN DZIENNIKI_AKTYWNOSCI
+  4  ON UZYTKOWNICY.NUMER_UZYTKOWNIKA = dzienniki_aktywnosci.numer_uzytkownika
+  5  WHERE (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'HH24:MI'))='10:00';
+
+IMIE                 NAZWISKO             (TO_CHAR(DZIENNI
+-------------------- -------------------- ----------------
+ODWIEDZONA_STRONA                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Adelajda             Kami?ska             04-01-2019 10:00 
+https://studia.elka.pw.edu.pl/file/18Z/BD2.WYK.1/priv/projekt/projekt_bd2.html#3                                                                                                                                                                                                                            
+
+Genowefa             Olszewska            04-01-2019 10:00 
+https://google.com                                                                                                                                                                                                                                                                                          
+
+Genowefa             Olszewska            06-01-2019 10:00 
+https://www.interia.net                                                                                                                                                                                                                                                                                     
+
+Marceli              Olszewsi             04-01-2019 10:00 
+https://www.tutorialspoint.com/oracle_terminal_online.php                                                                                                                                                                                                                                                   
+
+
+SQL> 
+SQL> --lista wszystkich stron odwiedzonych przez wszystkich uzytkownikow 4-01-2019
+SQL> SELECT uzytkownicy.imie, uzytkownicy.nazwisko, (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'DD-MM-YYYY HH24:MI')), DZIENNIKI_AKTYWNOSCI.odwiedzona_strona
+  2  FROM UZYTKOWNICY
+  3  INNER JOIN DZIENNIKI_AKTYWNOSCI
+  4  ON UZYTKOWNICY.NUMER_UZYTKOWNIKA = dzienniki_aktywnosci.numer_uzytkownika
+  5  WHERE (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'DD-MM-YYYY'))='04-01-2019';
+
+IMIE                 NAZWISKO             (TO_CHAR(DZIENNI
+-------------------- -------------------- ----------------
+ODWIEDZONA_STRONA                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Adelajda             Kami?ska             04-01-2019 10:00 
+https://studia.elka.pw.edu.pl/file/18Z/BD2.WYK.1/priv/projekt/projekt_bd2.html#3                                                                                                                                                                                                                            
+
+Genowefa             Olszewska            04-01-2019 10:00 
+https://google.com                                                                                                                                                                                                                                                                                          
+
+Marceli              Olszewsi             04-01-2019 10:00 
+https://www.tutorialspoint.com/oracle_terminal_online.php                                                                                                                                                                                                                                                   
+
+Marceli              Olszewsi             04-01-2019 12:00 
+https://www.interia.pl                                                                                                                                                                                                                                                                                      
+
+Marceli              Olszewsi             04-01-2019 22:00 
+https://www.dziwnaczarnastronaztorrentami.net                                                                                                                                                                                                                                                               
+
+
+SQL> 
+SQL> --lista uzytkownikow, ktorzy odwidzali strone o url https://www.dziwnaczarnastronaztorrentami.net
+SQL> SELECT uzytkownicy.imie, uzytkownicy.nazwisko, (TO_CHAR(DZIENNIKI_AKTYWNOSCI.data_i_czas_odwiedzin,'DD-MM-YYYY HH24:MI')), DZIENNIKI_AKTYWNOSCI.odwiedzona_strona
+  2  FROM UZYTKOWNICY
+  3  INNER JOIN DZIENNIKI_AKTYWNOSCI
+  4  ON UZYTKOWNICY.NUMER_UZYTKOWNIKA = dzienniki_aktywnosci.numer_uzytkownika
+  5  WHERE (DZIENNIKI_AKTYWNOSCI.odwiedzona_strona)='https://www.dziwnaczarnastronaztorrentami.net';
+
+IMIE                 NAZWISKO             (TO_CHAR(DZIENNI
+-------------------- -------------------- ----------------
+ODWIEDZONA_STRONA                                                                                                                                                                                                                                                                                           
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Genowefa             Olszewska            05-01-2019 12:00 
+https://www.dziwnaczarnastronaztorrentami.net                                                                                                                                                                                                                                                               
+
+Marceli              Olszewsi             04-01-2019 22:00 
+https://www.dziwnaczarnastronaztorrentami.net                                                                                                                                                                                                                                                               
+
+
+SQL> 
+SQL> 
+SQL> spool off 

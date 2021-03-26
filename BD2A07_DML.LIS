@@ -1,0 +1,481 @@
+SQL> --proba wstawienia do tabeli reekordu bez Adresu
+SQL> INSERT INTO UZYTKOWNICY
+  2  ( NUMER_UZYTKOWNIKA, 
+  3      HASLO,
+  4      EMAIL,
+  5      NAZWISKO,
+  6      IMIE,
+  7      PESEL,
+  8      TELEFON,
+  9      NR_DOMU,
+ 10      NR_MIESZKANIA,
+ 11      MIASTO,
+ 12      KOD_POCZTOWY 
+ 13  )
+ 14  VALUES
+ 15  (
+ 16      NR_UZYT_SEKW.NEXTVAL,
+ 17      'kotek217',
+ 18      'AdelajdaKaminska@armyspy.com',
+ 19      'Kaminska',
+ 20      'Adelajda', 
+ 21      '98765437930',
+ 22      '99999999987',
+ 23      "Kamienna",
+ 24      '56',
+ 25      '',
+ 26      'Katowice',
+ 27      '40-75'
+ 28  );
+
+Error starting at line : 4 in command -
+INSERT INTO UZYTKOWNICY
+( NUMER_UZYTKOWNIKA, 
+    HASLO,
+    EMAIL,
+    NAZWISKO,
+    IMIE,
+    PESEL,
+    TELEFON,
+    NR_DOMU,
+    NR_MIESZKANIA,
+    MIASTO,
+    KOD_POCZTOWY 
+)
+VALUES
+(
+    NR_UZYT_SEKW.NEXTVAL,
+    'kotek217',
+    'AdelajdaKaminska@armyspy.com',
+    'Kaminska',
+    'Adelajda', 
+    '98765437930',
+    '99999999987',
+    "Kamienna",
+    '56',
+    '',
+    'Katowice',
+    '40-75'
+)
+Error at Command Line : 4 Column : 13
+Error report -
+SQL Error: ORA-00913: too many values
+00913. 00000 -  "too many values"
+*Cause:    
+*Action:
+SQL> 
+SQL> --proba wstawienia do tabeli za długiego kodu pocztowego
+SQL> INSERT INTO UZYTKOWNICY
+  2  ( NUMER_UZYTKOWNIKA, 
+  3      HASLO,
+  4      EMAIL,
+  5      NAZWISKO,
+  6      IMIE,
+  7      PESEL,
+  8      TELEFON,
+  9      NR_DOMU,
+ 10      NR_MIESZKANIA,
+ 11      MIASTO,
+ 12      KOD_POCZTOWY 
+ 13  )
+ 14  VALUES
+ 15  (
+ 16      NR_UZYT_SEKW.NEXTVAL,
+ 17      'kotek217',
+ 18      'AdelajdaKaminska@armyspy.com',
+ 19      'Kaminska',
+ 20      'Adelajda', 
+ 21      '98765437930',
+ 22      '99999999987',
+ 23      '56',
+ 24      '',
+ 25      'Katowice',
+ 26      '40-75000000000000000000000'
+ 27  );
+
+Error starting at line : 34 in command -
+INSERT INTO UZYTKOWNICY
+( NUMER_UZYTKOWNIKA, 
+    HASLO,
+    EMAIL,
+    NAZWISKO,
+    IMIE,
+    PESEL,
+    TELEFON,
+    NR_DOMU,
+    NR_MIESZKANIA,
+    MIASTO,
+    KOD_POCZTOWY 
+)
+VALUES
+(
+    NR_UZYT_SEKW.NEXTVAL,
+    'kotek217',
+    'AdelajdaKaminska@armyspy.com',
+    'Kaminska',
+    'Adelajda', 
+    '98765437930',
+    '99999999987',
+    '56',
+    '',
+    'Katowice',
+    '40-75000000000000000000000'
+)
+Error report -
+ORA-12899: value too large for column "SYSTEM"."UZYTKOWNICY"."KOD_POCZTOWY" (actual: 26, maximum: 10)
+
+SQL> 
+SQL> 
+SQL> --proba wstawienia nie wlasciwego nr pesel
+SQL> INSERT INTO UZYTKOWNICY
+  2  ( NUMER_UZYTKOWNIKA, 
+  3      HASLO,
+  4      EMAIL,
+  5      NAZWISKO,
+  6      IMIE,
+  7      PESEL,
+  8      TELEFON,
+  9      NR_DOMU,
+ 10      NR_MIESZKANIA,
+ 11      MIASTO,
+ 12      KOD_POCZTOWY 
+ 13  )
+ 14  VALUES
+ 15  (
+ 16      NR_UZYT_SEKW.NEXTVAL,
+ 17      'kotek217',
+ 18      'AdelajdaKaminska@armyspy.com',
+ 19      'Kami?ska',
+ 20      'Adelajda', 
+ 21      '98765437930',
+ 22      '99999999999557',
+ 23      '56',
+ 24      '',
+ 25      'Katowice',
+ 26      '40-75'
+ 27  );
+
+Error starting at line : 64 in command -
+INSERT INTO UZYTKOWNICY
+( NUMER_UZYTKOWNIKA, 
+    HASLO,
+    EMAIL,
+    NAZWISKO,
+    IMIE,
+    PESEL,
+    TELEFON,
+    NR_DOMU,
+    NR_MIESZKANIA,
+    MIASTO,
+    KOD_POCZTOWY 
+)
+VALUES
+(
+    NR_UZYT_SEKW.NEXTVAL,
+    'kotek217',
+    'AdelajdaKaminska@armyspy.com',
+    'Kami?ska',
+    'Adelajda', 
+    '98765437930',
+    '99999999999557',
+    '56',
+    '',
+    'Katowice',
+    '40-75'
+)
+Error report -
+ORA-00001: unique constraint (SYSTEM.UZYT_PESEL_UN) violated
+
+SQL> --Wprowadzenie juz isteniejacego recordu /to samo id i nazwa/
+SQL>   INSERT INTO KATEGORIE
+  2  (
+  3      ID_KATEGORII,
+  4      NAZWA,
+  5      ID_KATEGORII_HIERARHII,
+  6      OPIS                   
+  7  )
+  8  VALUES
+  9  (
+ 10      1,
+ 11      'MOTORYZACJA',
+ 12      '',
+ 13      ' '
+ 14  );
+
+Error starting at line : 92 in command -
+  INSERT INTO KATEGORIE
+(
+    ID_KATEGORII,
+    NAZWA,
+    ID_KATEGORII_HIERARHII,
+    OPIS                   
+)
+VALUES
+(
+    1,
+    'MOTORYZACJA',
+    '',
+    ' '
+)
+Error report -
+ORA-00001: unique constraint (SYSTEM.KAT_PK) violated
+
+SQL> --Wprowadzenie juz isteniejacego recordu /ta sama nazwa/
+SQL>   INSERT INTO KATEGORIE
+  2  (
+  3      ID_KATEGORII,
+  4      NAZWA,
+  5      ID_KATEGORII_HIERARHII,
+  6      OPIS                   
+  7  )
+  8  VALUES
+  9  (
+ 10      ID_KAT_SEKW.NEXTVAL,
+ 11      'MOTORYZACJA',
+ 12      '',
+ 13      ' '
+ 14  );
+
+Error starting at line : 107 in command -
+  INSERT INTO KATEGORIE
+(
+    ID_KATEGORII,
+    NAZWA,
+    ID_KATEGORII_HIERARHII,
+    OPIS                   
+)
+VALUES
+(
+    ID_KAT_SEKW.NEXTVAL,
+    'MOTORYZACJA',
+    '',
+    ' '
+)
+Error report -
+ORA-00001: unique constraint (SYSTEM.KAT_NAZWA_UN) violated
+
+SQL> --Wprowadzenie nie isteniejacego id nad kategorii
+SQL>   INSERT INTO KATEGORIE
+  2  (
+  3      ID_KATEGORII,
+  4      NAZWA,
+  5      ID_KATEGORII_HIERARHII,
+  6      OPIS                   
+  7  )
+  8  VALUES
+  9  (
+ 10      ID_KAT_SEKW.NEXTVAL,
+ 11      'MUZYKA_NOWOCZESNA',
+ 12      '8',
+ 13      ' '
+ 14  );
+
+Error starting at line : 122 in command -
+  INSERT INTO KATEGORIE
+(
+    ID_KATEGORII,
+    NAZWA,
+    ID_KATEGORII_HIERARHII,
+    OPIS                   
+)
+VALUES
+(
+    ID_KAT_SEKW.NEXTVAL,
+    'MUZYKA_NOWOCZESNA',
+    '8',
+    ' '
+)
+Error report -
+ORA-02291: integrity constraint (SYSTEM.KAT_KAT_FK) violated - parent key not found
+
+SQL> 
+SQL> 
+SQL> --Przypisanie nie istniejacego par dla uzytkownika
+SQL>  INSERT INTO PARAMETRY_UZYT
+  2    (
+  3      NUMER_UZYTKOWNIKA,
+  4      ID_PARAMETRU,
+  5      WARTOSC
+  6    )
+  7  VALUES
+  8  (
+  9      '1',
+ 10      '12',
+ 11      '14'
+ 12  );
+
+Error starting at line : 139 in command -
+ INSERT INTO PARAMETRY_UZYT
+  (
+    NUMER_UZYTKOWNIKA,
+    ID_PARAMETRU,
+    WARTOSC
+  )
+VALUES
+(
+    '1',
+    '12',
+    '14'
+)
+Error report -
+ORA-02291: integrity constraint (SYSTEM.PAR_UZYT_PAR_WYG_STR_FK) violated - parent key not found
+
+SQL> --przypożdkownia nie istniejącego parametru dla użytkownika
+SQL>  INSERT INTO PARAMETRY_UZYT
+  2    (
+  3      NUMER_UZYTKOWNIKA,
+  4      ID_PARAMETRU,
+  5      WARTOSC
+  6    )
+  7  VALUES
+  8  (
+  9      '1',
+ 10      '12',
+ 11      '14'
+ 12  );
+
+Error starting at line : 152 in command -
+ INSERT INTO PARAMETRY_UZYT
+  (
+    NUMER_UZYTKOWNIKA,
+    ID_PARAMETRU,
+    WARTOSC
+  )
+VALUES
+(
+    '1',
+    '12',
+    '14'
+)
+Error report -
+ORA-02291: integrity constraint (SYSTEM.PAR_UZYT_PAR_WYG_STR_FK) violated - parent key not found
+
+SQL> --utworzenie parametru ze złym typem danych
+SQL>  INSERT INTO PARAMETRY_WYGLADU_STR
+  2    (
+  3      ID_PARAMETRU,
+  4      NAZWA,
+  5      TYP_DANYCH,
+  6      CZY_OPCJONALNY,
+  7      WARTOSC_DOMYSLNA,
+  8      OPIS
+  9    )
+ 10  VALUES
+ 11  (
+ 12      ID_PAR_WYG_STR_SEKW.NEXTVAL,
+ 13      'TEMP_PARAMETR_1000',
+ 14      'K',
+ 15      'T',
+ 16      'Upper',
+ 17      ''
+ 18  );
+
+Error starting at line : 165 in command -
+ INSERT INTO PARAMETRY_WYGLADU_STR
+  (
+    ID_PARAMETRU,
+    NAZWA,
+    TYP_DANYCH,
+    CZY_OPCJONALNY,
+    WARTOSC_DOMYSLNA,
+    OPIS
+  )
+VALUES
+(
+    ID_PAR_WYG_STR_SEKW.NEXTVAL,
+    'TEMP_PARAMETR_1000',
+    'K',
+    'T',
+    'Upper',
+    ''
+)
+Error report -
+ORA-02290: check constraint (SYSTEM.CHECK_TYP_DANYCH) violated
+
+SQL> --utworzenie parametru ze złą opcjonalnością
+SQL>  INSERT INTO PARAMETRY_WYGLADU_STR
+  2    (
+  3      ID_PARAMETRU,
+  4      NAZWA,
+  5      TYP_DANYCH,
+  6      CZY_OPCJONALNY,
+  7      WARTOSC_DOMYSLNA,
+  8      OPIS
+  9    )
+ 10  VALUES
+ 11  (
+ 12      ID_PAR_WYG_STR_SEKW.NEXTVAL,
+ 13      'TEMP_PARAMETR_9800',
+ 14      'C',
+ 15      'L',
+ 16      '11',
+ 17      ''
+ 18  );
+
+Error starting at line : 184 in command -
+ INSERT INTO PARAMETRY_WYGLADU_STR
+  (
+    ID_PARAMETRU,
+    NAZWA,
+    TYP_DANYCH,
+    CZY_OPCJONALNY,
+    WARTOSC_DOMYSLNA,
+    OPIS
+  )
+VALUES
+(
+    ID_PAR_WYG_STR_SEKW.NEXTVAL,
+    'TEMP_PARAMETR_9800',
+    'C',
+    'L',
+    '11',
+    ''
+)
+Error report -
+ORA-02290: check constraint (SYSTEM.CHECK_CZY_OPCJ) violated
+
+SQL> 
+SQL> 
+SQL> --usuniecia uzytkownika 
+SQL> DELETE FROM UZYTKOWNICY WHERE NUMER_UZYTKOWNIKA = '1';
+
+Error starting at line : 205 in command -
+DELETE FROM UZYTKOWNICY WHERE NUMER_UZYTKOWNIKA = '1'
+Error report -
+ORA-02292: integrity constraint (SYSTEM.DZIENN_AKTYWN_UZYT_FK) violated - child record found
+
+SQL> 
+SQL> --usuniecie samej nad kategorii kategorii bez podkategorii
+SQL> DELETE FROM KATEGORIE WHERE ID_KATEGORII = '2';
+
+Error starting at line : 208 in command -
+DELETE FROM KATEGORIE WHERE ID_KATEGORII = '2'
+Error report -
+ORA-02292: integrity constraint (SYSTEM.KAT_KAT_FK) violated - child record found
+
+SQL> 
+SQL> --usuniécie dzienika aktywnoci
+SQL> DELETE FROM DZIENNIKI_AKTYWNOSCI WHERE ID_PARAMETRU = '3';
+
+Error starting at line : 211 in command -
+DELETE FROM DZIENNIKI_AKTYWNOSCI WHERE ID_PARAMETRU = '3'
+Error at Command Line : 211 Column : 40
+Error report -
+SQL Error: ORA-00904: "ID_PARAMETRU": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+SQL> 
+SQL> --usuniécie dzienika aktywnoci, dla nie isniejącego użytkownika
+SQL> DELETE FROM DZIENNIKI_AKTYWNOSCI WHERE ID_PARAMETRU = '9999999';
+
+Error starting at line : 214 in command -
+DELETE FROM DZIENNIKI_AKTYWNOSCI WHERE ID_PARAMETRU = '9999999'
+Error at Command Line : 214 Column : 40
+Error report -
+SQL Error: ORA-00904: "ID_PARAMETRU": invalid identifier
+00904. 00000 -  "%s: invalid identifier"
+*Cause:    
+*Action:
+SQL> 
+SQL> spool off
